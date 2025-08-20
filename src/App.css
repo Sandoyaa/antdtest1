@@ -1,0 +1,32 @@
+.App {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.table {
+    margin: 16px;
+}
+.bio {
+    background: #e6f7ff;   /* голубой */
+    padding: 16px;
+    margin: 16px;
+    border-radius: 8px;
+}
+
+.about {
+    background: #fff7e6;   /* светло-жёлтый */
+    padding: 16px;
+    margin: 16px;
+    border-radius: 8px;
+}
+
+.skills {
+    background: #f9f0ff;   /* сиреневый */
+    padding: 16px;
+    margin: 16px;
+    border-radius: 8px;
+    text-align: center;    /* выравнивание по центру */
+}

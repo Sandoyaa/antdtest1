@@ -10,23 +10,28 @@
     margin: 16px;
 }
 .bio {
-    background: #e6f7ff;   /* голубой */
+    background: #e6f7ff;
     padding: 16px;
     margin: 16px;
     border-radius: 8px;
 }
 
 .about {
-    background: #fff7e6;   /* светло-жёлтый */
-    padding: 16px;
-    margin: 16px;
+    background: #fff7e6;
+    padding: 8px;
+    margin: 8px;
     border-radius: 8px;
 }
 
 .skills {
-    background: #f9f0ff;   /* сиреневый */
-    padding: 16px;
-    margin: 16px;
+    background: #f9f0ff;
+    padding: 8px;
+    margin: 8px;
     border-radius: 8px;
-    text-align: center;    /* выравнивание по центру */
+    text-align: center;
+}
+
+.tags {
+    margin: 8px;
+    text-align: center;
 }

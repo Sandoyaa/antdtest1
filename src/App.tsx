@@ -24,7 +24,7 @@ const App = () => {
                         </Col>
                         <Col xs={24} md={{span: 12, order:2}} className={'skills'} >
                             <Title level={4}>Skills:</Title>
-                            <Flex gap="4px 0" wrap>
+                            <Flex align={'center'} gap="16px" vertical={true} className={'tags'}>
                                 <Tag bordered={false} color="processing">professional swimmer</Tag>
                                 <Tag bordered={false} color="cyan">life enjoyer</Tag>
                                 <Tag bordered={false} color="lime">bruskett' eater</Tag>

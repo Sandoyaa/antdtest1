@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import './App.css'
 import { Button, Col, Flex, Row, Spin, Tag, Typography } from 'antd';
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
@@ -20,7 +20,7 @@ const App = () => {
                         </Col>
                         <Col xs={24} md={{span: 16,order:3}} className={'about'} >
                             <Title level={4}>About me: </Title>
-                            <Title level={5}>lalalala dota player</Title>
+                            <Title level={5}>lalalala dota player and lorem ipsum</Title>
                         </Col>
                         <Col xs={24} md={{span: 12, order:2}} className={'skills'} >
                             <Title level={4}>Skills:</Title>
@@ -33,7 +33,7 @@ const App = () => {
                     </Row>
                 </div>
             )}
-                    <Button className="button" onClick={() => setMainTable(!mainTable)}
+                    <Button size={"large"} onClick={() => setMainTable(!mainTable)}
                     block={screens.xs}>
                         {!mainTable ? <Spin size="small" /> : "Hide"}
                     </Button>

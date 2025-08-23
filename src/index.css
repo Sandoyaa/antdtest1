@@ -2,4 +2,5 @@ body {
   background: radial-gradient(circle at center, #eeaeca 0%, #94bbe9 100%);
   background-repeat: no-repeat;
   background-size: cover;
+    margin: 0 !important;
 }

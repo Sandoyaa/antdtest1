@@ -1,18 +1,8 @@
 .App {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
 }
 
-.table {
-    margin: 16px;
-    text-align: center;
-}
-
-.block {
-    padding: 16px;
+.container {
+    height: 100%;
     border-radius: 12px;
-    text-align: center;
 }

@@ -1,83 +1,99 @@
-import { useState } from "react";
+import {Fragment, useMemo, useState} from "react";
 import './App.css'
-import { Button, Col, Modal, Row, Spin, Input, Typography } from 'antd';
+import {Button, Col, Flex, Form, Input, Modal, Row} from 'antd';
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
-import { PlusOutlined, DeleteFilled } from '@ant-design/icons'
+import {PlusOutlined} from '@ant-design/icons'
+import loadImg from './img/load.jpeg'
+import {type Block, CardInfo, Header} from "./components";
+import {blockData} from "./constants/data.ts";
 
-const { Title } = Typography;
-
-const colors = ["green", "red", "blue", "purple"];
 
 const App = () => {
-    const [mainTable, setMainTable] = useState(false);
-    const [blocks, setBlocks] = useState([
-        { id: 1, title: 'Bio', content: ['Sergey', 'Age: 26'] },
-        { id: 2, title: 'About me', content: ['lalala dota player and lorem'] },
-        { id: 3, title: 'Skills', content: ['professional swimmer', 'life enjoyer'] }
-    ]);
-    const [modal, setModal] = useState(false);
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+    const [form] = Form.useForm();
+    const [mainTable, setMainTable] = useState<boolean>(false);
+    const [blocks, setBlocks] = useState<Block[]>(blockData);
+    const [modal, setModal] = useState<boolean>(false);
     const screens = useBreakpoint();
+
+    const buttonBlockCondition = useMemo(() => {
+        return screens.xs || !screens.md
+    }, [screens])
 
     const showModal = () => setModal(true);
 
     const handleCancel = () => {
         setModal(false);
-        setTitle('');
-        setContent('');
+        form.resetFields();
     };
 
     const handleAddBlock = () => {
-        if (!title || !content) return;
-
-        const newBlock = {
-            id: Date.now(),
-            title: title,
-            content: content.split(',')
-        };
-
-        setBlocks([...blocks, newBlock]);
-        setModal(false);
-        setTitle('');
-        setContent('');
+        form.submit();
     };
 
-    const removeBlock = (id) => {
+    const removeBlock = (id: number) => {
         setBlocks(blocks.filter(b => b.id !== id))
     }
 
+    const onFinish = (values: { title: string, description: string }) => {
+        setBlocks((prevState) => [...prevState, {
+            id: Date.now(),
+            content: values.description.split(','),
+            title: values.title,
+        }]);
+        setModal(false)
+    }
 
     return (
-        <div className='App'>
-            {mainTable && (
-                <div className={'table'}>
-                    <Button icon={<PlusOutlined />} size='large' block={screens.xs} onClick={showModal}></Button>
-                    <Row gutter={[16, 16]} justify='center' className='table'>
-                        {blocks.map ((block, index) => (
-                            <Col xs={24} md={12} key={block.id} className='block'
-                                style={{ backgroundColor: colors[index % colors.length]}}>
-                                <Button icon={<DeleteFilled />} size={"large"} onClick={() => removeBlock(block.id)}></Button>
-                                <Title level={3}>{block.title}</Title>
-                                {block.content.map((item, i) => (
-                                    <Title level={5} key={i}>{item}</Title>
-                                ))}
-                            </Col>
-                        ))}
-                    </Row>
-                </div>
-            )}
-
-            <Modal title='Add new block' open={modal} onOk={handleAddBlock} onCancel={handleCancel} okText='Add' cancelText='Cancel'>
-                <Input placeholder='Title' onChange={(e) => setTitle(e.target.value)} value={title} style = {{marginBottom:10}} />
-                <Input placeholder='Content' onChange={(e) => setContent(e.target.value)} value={content}/>
+        <Fragment>
+            <Header title='123' children={<Fragment><Button>a</Button>
+                <Button>a</Button></Fragment>}/>
+            <Flex className='App' justify='center' vertical gap={16}>
+                {mainTable && (
+                    <Flex vertical align='center' gap={16}>
+                        <Button icon={<PlusOutlined/>} size='large' block={buttonBlockCondition}
+                                onClick={showModal}></Button>
+                        <Row gutter={[16, 16]} justify='center' className='table' style={{width: '100%'}}>
+                            {blocks.map((block, index,) => (
+                                <Col xs={24} md={12} key={block.id}>
+                                    <CardInfo removeBlock={removeBlock} block={block} index={index}/>
+                                </Col>
+                            ))}
+                        </Row>
+                    </Flex>
+                )}
+                <Flex justify='center'>
+                    <Button size='large' block={buttonBlockCondition} onClick={() => setMainTable(!mainTable)}
+                            style={{
+                                backgroundImage: `url(${loadImg})`,
+                                backgroundSize: 'contain',
+                                backgroundRepeat: 'no-repeat',
+                                height: '105px',
+                                width: '100px'
+                            }}>
+                        {mainTable && 'Hide'}
+                    </Button>
+                </Flex>
+            </Flex>
+            <Modal title='Add new block' open={modal} onOk={handleAddBlock} onCancel={handleCancel} okText='Add'
+                   cancelText='Cancel'>
+                <Form form={form} onFinish={onFinish}>
+                    <Form.Item
+                        label="Title"
+                        name="title"
+                        rules={[{required: true, message: 'Please input your title!'}]}
+                    >
+                        <Input placeholder='Заголовок'/>
+                    </Form.Item>
+                    <Form.Item
+                        label="Description"
+                        name="description"
+                        rules={[{required: true, message: 'Please input your description!'}]}
+                    >
+                        <Input placeholder='Описание'/>
+                    </Form.Item>
+                </Form>
             </Modal>
-            <div style={{display: "flex", justifyContent: "center"}}>
-                <Button size='large' block={screens.xs} onClick={() => setMainTable(!mainTable)}>
-                    {!mainTable ? <Spin size='small' /> : 'Hide'}
-                </Button>
-            </div>
-        </div>
+        </Fragment>
     );
 };
 

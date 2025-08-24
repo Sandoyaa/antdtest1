@@ -3,14 +3,12 @@ import './App.css'
 import {Button, Col, Flex, Form, Input, Modal, Row, Switch} from 'antd';
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import {PlusOutlined} from '@ant-design/icons'
-import loadImg from './img/load.jpeg'
 import {type Block, CardInfo, Header} from "./components";
 import {blockData} from "./constants/data.ts";
 
 
 const App = () => {
     const [form] = Form.useForm();
-    const [mainTable, setMainTable] = useState<boolean>(false);
     const [blocks, setBlocks] = useState<Block[]>(blockData);
     const [modal, setModal] = useState<boolean>(false);
     const screens = useBreakpoint();
@@ -52,30 +50,16 @@ const App = () => {
             <Header title='123' children={<Fragment><Button>a</Button>
                 <Button>a</Button></Fragment>}/>
             <Flex className='App' justify='center' vertical gap={16}>
-                {mainTable && (
-                    <Flex vertical align='center' gap={16}>
-                        <Button icon={<PlusOutlined/>} size='large' block={buttonBlockCondition}
-                                onClick={showModal}></Button>
-                        <Row gutter={[16, 16]} justify='center' className='table' style={{width: '100%'}}>
-                            {blocks.map((block, index,) => (
-                                <Col xs={24} md={12} key={block.id}>
-                                    <CardInfo removeBlock={removeBlock} block={block} index={index}/>
-                                </Col>
-                            ))}
-                        </Row>
-                    </Flex>
-                )}
-                <Flex justify='center'>
-                    <Button size='large' block={buttonBlockCondition} onClick={() => setMainTable(!mainTable)}
-                            style={{
-                                backgroundImage: `url(${loadImg})`,
-                                backgroundSize: 'contain',
-                                backgroundRepeat: 'no-repeat',
-                                height: '105px',
-                                width: '100px'
-                            }}>
-                        {mainTable && 'Hide'}
-                    </Button>
+                <Flex vertical align='center' gap={16}>
+                    <Button icon={<PlusOutlined/>} size='large' block={buttonBlockCondition}
+                            onClick={showModal}></Button>
+                    <Row gutter={[16, 16]} justify='center' className='table' style={{width: '100%'}}>
+                        {blocks.map((block, index,) => (
+                            <Col xs={24} md={12} key={block.id}>
+                                <CardInfo removeBlock={removeBlock} block={block} index={index}/>
+                            </Col>
+                        ))}
+                    </Row>
                 </Flex>
             </Flex>
             <Modal title='Add new block' open={modal} onOk={handleAddBlock} onCancel={handleCancel} okText='Add'

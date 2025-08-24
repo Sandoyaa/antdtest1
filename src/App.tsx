@@ -1,6 +1,6 @@
 import {Fragment, useMemo, useState} from "react";
 import './App.css'
-import {Button, Col, Flex, Form, Input, Modal, Row} from 'antd';
+import {Button, Col, Flex, Form, Input, Modal, Row, Switch} from 'antd';
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import {PlusOutlined} from '@ant-design/icons'
 import loadImg from './img/load.jpeg'
@@ -42,9 +42,13 @@ const App = () => {
         }]);
         setModal(false)
     }
+    const onChange = (checked: boolean) => {
+        console.log(`switch to ${checked}`);
+    };
 
     return (
         <Fragment>
+            <Switch defaultChecked onChange={onChange}/>;
             <Header title='123' children={<Fragment><Button>a</Button>
                 <Button>a</Button></Fragment>}/>
             <Flex className='App' justify='center' vertical gap={16}>
